@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset=utf-8/>
+    <title>Sporter</title>
+    <meta name='viewport'
+          content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.1/mapbox-gl.js'></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='application.js') }}"></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.1/mapbox-gl.css' rel='stylesheet'/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css'
+          rel='stylesheet'/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='main.css') }}">
+
+</head>
+
+
+<body>
+<div class="wrapper">
+
+    <div class="sidebar" data-color="azure">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="/" class="simple-text">
+                    SPORTER
+                </a>
+            </div>
+            <form>
+                <h4 class="great">Gyms nearby</h4>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-map-marker fa-2x"></i></span>
+                    <input id="streetName" type="text" class="form-control" name="streetName" placeholder="Street name">
+                    <input id="streetNumber" type="text" class="form-control" name="streetNumber"
+                           placeholder="Street number">
+                </div>
+                <div id="slidecontainer">
+                    <h5 class="great">Distance: <span id="demo"></span><span> m</span></h5>
+                    <input id="distance" type="range" min="0" max="20000" value="2000" step="100" class="slider">
+                    <script>initSliderRange()</script>
+                </div>
+                <ul class="nav">
+                    <button id="search" onclick="renderGymPoints()" type="button" class="btn btn-default btn-search">
+                        Search
+                    </button>
+                </ul>
+            </form>
+            <form>
+                <h4 class="great">Pitch by sport type</h4>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-object-ungroup fa-lg"></i></span>
+                    <div id="dropdownSportList" class="dropdown">
+                        <button id="dropdownButton" class="btn btn-default dropdown-toggle btn-dropdown" type="button"
+                                data-toggle="dropdown">
+                            Choose your sport
+                            <div class="caret-container"><span class="fa fa-chevron-down" aria-hidden="true"></span>
+                            </div>
+                        </button>
+                        <script>loadPitchSportList()</script>
+                    </div>
+                </div>
+                <ul class="nav">
+                    <button id="display" onclick="renderPitchPolygons()" type="button"
+                            class="btn btn-default btn-search">
+                        Display
+                    </button>
+                </ul>
+            </form>
+            <form class="lastForm">
+                <h4 class="great">Where to run?</h4>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-road fa-lg"></i></span>
+                    <input id="cityArea" type="text" class="form-control" name="cityAreaName"
+                           placeholder="City area name">
+                </div>
+                <button id="analyse" onclick="renderCityAreaRunningShapes()" type="button"
+                        class="btn btn-default btn-search">Analyse
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="main-panel">
+
+        <div id="map-container">
+            <div id='map'></div>
+        </div>
+        <script>
+          L.mapbox.accessToken = 'pk.eyJ1IjoiZGVsdXNpb254IiwiYSI6ImNqN3doZXhkbzVkdjQyeW1sZW80Z2dvdm4ifQ.MRyW2TT9LlOKSuV7UZRgIQ';
+          var map = L.mapbox.map('map', 'mapbox.streets', {zoomControl: false}).setView([48.148889, 17.107670], 13);
+          new L.Control.Zoom({position: 'topright'}).addTo(map);
+        </script>
+    </div>
+</div>
+</body>
+
+</html>

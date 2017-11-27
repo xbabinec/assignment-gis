@@ -1,0 +1,6 @@
+{
+  "name": "bratislava",
+  "user": "postgres",
+  "pass": "postgres",
+  "host": "localhost"
+}
